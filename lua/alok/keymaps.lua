@@ -39,6 +39,9 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
 keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
+-- Icon insert
+vim.keymap.set("n", "<Leader><Leader>i", "<cmd>PickIcons<cr>", opts)
+
 -- Insert --
 -- Press jk fast to exit insert mode 
 keymap("i", "jk", "<ESC>", opts)
@@ -55,6 +58,10 @@ keymap("v", "<S-f>", ":lua vim.lsp.buf.range_formatting()<CR>", opts)
 keymap("v", "<A-j>", ":m .+1<CR>==", opts)
 keymap("v", "<A-k>", ":m .-2<CR>==", opts)
 keymap("v", "p", '"_dP', opts)
+
+-- Icon insert in insert mode
+vim.keymap.set("i", "<C-i>", "<cmd>PickInsert<cr>", opts)
+vim.keymap.set("i", "<A-i>", "<cmd>PickAltFontAndSymbolsInsert<cr>", opts)
 
 -- Visual Block --
 -- Move text up and down

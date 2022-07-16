@@ -66,6 +66,16 @@ return packer.startup(function(use)
   -- Colorizer
   use({ "norcalli/nvim-colorizer.lua", commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" })
 
+  -- Icon picker
+  use({ "norcalli/nvim-colorizer.lua", commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" })
+	use({ "stevearc/dressing.nvim", commt = "1e60c07ae9a8557ac6395144606c3a5335ad47e0" })
+	use({
+		"ziontee113/icon-picker.nvim", commit = "4f373fbb99ddd7f1a76c6b5a4b08be93aca6891f",
+		config = function()
+			require("icon-picker")
+		end,
+	})
+
   -- cmp plugins
   use({ "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" }) -- The completion plugin
   use({ "hrsh7th/cmp-buffer", commit = "62fc67a2b0205136bc3e312664624ba2ab4a9323" }) -- buffer completions
