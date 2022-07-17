@@ -65,6 +65,17 @@ return packer.startup(function(use)
   -- Colorizer
   use({ "norcalli/nvim-colorizer.lua", commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" })
 
+  -- Markdown preview
+  -- install without yarn or npm
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  })
+
   -- Icon picker
   use({ "stevearc/dressing.nvim", commt = "1e60c07ae9a8557ac6395144606c3a5335ad47e0" })
   use({
