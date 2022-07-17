@@ -38,26 +38,25 @@ packer.init({
   },
 })
 
--- Install your plugins here
 return packer.startup(function(use)
   -- My plugins here
-
-  use({ "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }) -- Have packer manage itself
-  use({ "nvim-lua/plenary.nvim", commit = "968a4b9afec0c633bc369662e78f8c5db0eba249" }) -- Useful lua functions used by lots of plugins
-  use({ "windwp/nvim-autopairs", commit = "fa6876f832ea1b71801c4e481d8feca9a36215ec" }) -- Autopairs, integrates with both cmp and treesitter
-  use({ "numToStr/Comment.nvim", commit = "2c26a00f32b190390b664e56e32fd5347613b9e2" })
+  -- updated
+  use({ "wbthomason/packer.nvim", commit = "494fd5999b19e29992eb0978c4fa8988d2023ad8" }) -- Have packer manage itself
+  use({ "nvim-lua/plenary.nvim", commit = "986ad71ae930c7d96e812734540511b4ca838aa2" }) -- Useful lua functions used by lots of plugins
+  use({ "windwp/nvim-autopairs", commit = "972a7977e759733dd6721af7bcda7a67e40c010e" }) -- Autopairs, integrates with both cmp and treesitter
+  use({ "numToStr/Comment.nvim", commit = "7c49fb2ac01a9f03410100c8e78f647bbea857e8" })
   use({ "JoosepAlviste/nvim-ts-context-commentstring", commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269" })
-  use({ "kyazdani42/nvim-web-devicons", commit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e" })
-  use({ "kyazdani42/nvim-tree.lua", commit = "bdb6d4a25410da35bbf7ce0dbdaa8d60432bc243" })
-  use({ "akinsho/bufferline.nvim", commit = "c78b3ecf9539a719828bca82fc7ddb9b3ba0c353" })
+  use({ "kyazdani42/nvim-web-devicons", commit = "2d02a56189e2bde11edd4712fea16f08a6656944" })
+  use({ "kyazdani42/nvim-tree.lua", commit = "06e48c29c4543331eee41753e69e3bd2235bf430" })
+  use({ "akinsho/bufferline.nvim", commit = "d7b775a35be9c80ed591d3335b35ec84e5c5d81e" })
   use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
-  use({ "nvim-lualine/lualine.nvim", commit = "3362b28f917acc37538b1047f187ff1b5645ecdd" })
-  use({ "akinsho/toggleterm.nvim", commit = "aaeed9e02167c5e8f00f25156895a6fd95403af8" })
+  use({ "nvim-lualine/lualine.nvim", commit = "655411fb7aa3cf4d46094132d684d815453f5043" })
+  use({ "akinsho/toggleterm.nvim", commit = "3f9d383f1f89eb5a1558ee612061eccaca385680" })
   use({ "ahmedkhalf/project.nvim", commit = "541115e762764bc44d7d3bf501b6e367842d3d4f" })
-  use({ "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350" })
-  use({ "lukas-reineke/indent-blankline.nvim", commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2" })
-  use({ "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" })
-  use("folke/which-key.nvim")
+  use({ "lewis6991/impatient.nvim", commit = "2aa872de40dbbebe8e2d3a0b8c5651b81fe8b235" })
+  use({ "lukas-reineke/indent-blankline.nvim", commit = "4a58fe6e9854ccfe6c6b0f59abb7cb8301e23025" })
+  use({ "goolord/alpha-nvim", commit = "79187fdf8f2a08a7174f237423198f6e75ae213a" })
+  use({ "folke/which-key.nvim", commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71" })
 
   -- Colorschemes
   use({ "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" })
@@ -67,14 +66,13 @@ return packer.startup(function(use)
   use({ "norcalli/nvim-colorizer.lua", commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" })
 
   -- Icon picker
-  use({ "norcalli/nvim-colorizer.lua", commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" })
-	use({ "stevearc/dressing.nvim", commt = "1e60c07ae9a8557ac6395144606c3a5335ad47e0" })
-	use({
-		"ziontee113/icon-picker.nvim", commit = "4f373fbb99ddd7f1a76c6b5a4b08be93aca6891f",
-		config = function()
-			require("icon-picker")
-		end,
-	})
+  use({ "stevearc/dressing.nvim", commt = "1e60c07ae9a8557ac6395144606c3a5335ad47e0" })
+  use({
+    "ziontee113/icon-picker.nvim", commit = "4f373fbb99ddd7f1a76c6b5a4b08be93aca6891f",
+    config = function()
+      require("icon-picker")
+    end,
+  })
 
   -- cmp plugins
   use({ "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" }) -- The completion plugin
