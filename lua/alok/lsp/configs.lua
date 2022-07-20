@@ -8,7 +8,8 @@ local lspconfig = require("lspconfig")
 local servers = {
   "jsonls",
   "html",
-  "clangd"
+  "clangd",
+  "bashls"
 }
 
 lsp_installer.setup({
