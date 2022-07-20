@@ -57,10 +57,14 @@ return packer.startup(function(use)
   use({ "lukas-reineke/indent-blankline.nvim", commit = "4a58fe6e9854ccfe6c6b0f59abb7cb8301e23025" })
   use({ "goolord/alpha-nvim", commit = "79187fdf8f2a08a7174f237423198f6e75ae213a" })
   use({ "folke/which-key.nvim", commit = "bd4411a2ed4dd8bb69c125e339d837028a6eea71" })
+  
+  -- Fugitive is the premier Vim plugin for Git
+  use({ "tpope/vim-fugitive", commit = "ff04324bffd86f9c146cc5fc2c0a2f95a1509643" })
 
   -- Colorschemes
   use({ "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" })
   use({ "sainnhe/gruvbox-material", commit = "3db676452dcbcc75bcad2de49fb9855dc0113933" })
+  use({ "joshdick/onedark.vim", commit = "1fe54f212f09a03c2b5e277f0fe5b7b9d0b0a4ed" })
 
   -- Colorizer
   use({ "norcalli/nvim-colorizer.lua", commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" })
