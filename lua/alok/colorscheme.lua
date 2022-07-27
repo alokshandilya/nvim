@@ -1,10 +1,3 @@
--- local colorscheme = "darkplus"
---
--- local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
--- if not status_ok then
---   return
--- end
-
 -- -- #######################################
 -- -- ########### gruvbox-material ##########
 -- -- #######################################
@@ -20,3 +13,15 @@ try
   colorscheme gruvbox-material
 endtry
 ]]
+
+-- -- #######################################
+-- -- ########### gruvbox-material ##########
+-- -- #######################################
+-- vim.g.tokyonight_style = "night"
+-- vim.g.tokyonight_transparent = true
+-- vim.g.tokyonight_hide_inactive_statusline = true
+-- vim.g.tokyonight_transparent_sidebar = true
+-- vim.g.tokyonight_dark_float = false
+-- vim.g.tokyonight_dark_sidebar = false
+-- vim.g.tokyonight_lualine_bold = true
+-- vim.cmd[[colorscheme tokyonight]]
