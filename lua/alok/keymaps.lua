@@ -68,7 +68,19 @@ keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 
 -- Git
-keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
+keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts) -- lazygit
+keymap("n", "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk()<CR>", opts) -- next hunk
+keymap("n", "<leader>gk", "<cmd>lua require 'gitsigns'.prev_hunk()<CR>", opts) -- prev hunk
+keymap("n", "<leader>gl", "<cmd>lua require 'gitsigns'.blame_line()<CR>", opts) -- blame
+keymap("n", "<leader>gp", "<cmd>lua require 'gitsigns'.preview_hunk()<CR>", opts) -- preview hunk
+keymap("n", "<leader>gr", "<cmd>lua require 'gitsigns'.reset_hunk()<CR>", opts) -- reset hunk
+keymap("n", "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<CR>", opts) -- reset buffer
+keymap("n", "<leader>gs", "<cmd>lua require 'gitsigns'.stage_hunk()<CR>", opts) -- stage hunk
+keymap("n", "<leader>gu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<CR>", opts) -- undo stage hunk
+keymap("n", "<leader>go", "<cmd>Telescope git_status<CR>", opts) -- open changed file
+keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", opts) -- checkout branch
+keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", opts) -- checkout commits
+keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<CR>", opts) -- git diff <leader>q to exit
 
 -- Colorizer
 keymap("n", "<leader>cc", ":ColorizerToggle<CR>")
