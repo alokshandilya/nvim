@@ -79,7 +79,8 @@ keymap("n", "<leader>gs", "<cmd>lua require 'gitsigns'.stage_hunk()<CR>", opts) 
 keymap("n", "<leader>gu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<CR>", opts) -- undo stage hunk
 keymap("n", "<leader>go", "<cmd>Telescope git_status<CR>", opts) -- open changed file
 keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", opts) -- checkout branch
-keymap("n", "<leader>gc", "<cmd>Telescope git_commits<CR>", opts) -- checkout commits
+keymap("n", "<leader>gcc", "<cmd>Telescope git_commits<CR>", opts) -- checkout commits
+keymap("n", "<leader>gcm", "<cmd>Git commit<CR>", opts) -- checkout commits
 keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<CR>", opts) -- git diff <leader>q to exit
 
 -- Colorizer
