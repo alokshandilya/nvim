@@ -56,6 +56,7 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- format selected buffer
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 keymap("v", "lf", ":lua vim.lsp.buf.range_formatting()<CR>", opts)
 
 -- Plugins --
@@ -83,7 +84,9 @@ keymap("n", "<leader>go", "<cmd>Telescope git_status<CR>", opts) -- open changed
 keymap("n", "<leader>gb", "<cmd>Telescope git_branches<CR>", opts) -- checkout branch
 keymap("n", "<leader>gcc", "<cmd>Telescope git_commits<CR>", opts) -- checkout commits
 keymap("n", "<leader>gcm", "<cmd>Git commit<CR>", opts) -- checkout commits
-keymap("n", "<leader>gd", "<cmd>Gitsigns diffthis HEAD<CR>", opts) -- git diff <leader>q to exit
+keymap("n", "<leader>gdd", "<cmd>Gitsigns diffthis HEAD<CR>", opts) -- git diff <leader>q to exit
+keymap("n", "<leader>gds", "<cmd>Git diff --staged<CR>", opts) -- git diff staged
+keymap("n", "<leader>gP", "<cmd>Git push<CR>", opts) -- git push
 
 -- Colorizer
 keymap("n", "<leader>cc", ":ColorizerToggle<CR>")
