@@ -91,6 +91,10 @@ keymap("n", "<leader>gP", "<cmd>Git push<CR>", opts) -- git push
 -- Colorizer
 keymap("n", "<leader>cc", ":ColorizerToggle<CR>")
 
+-- Icon Picker
+keymap("n", "<Leader><Leader>i", "<cmd>PickEverything<Cr>", opts)
+keymap("n", "<Leader><Leader>y", "<cmd>PickSymbols<Cr>", opts) --> Yank the selected icon into register
+
 -- Markdown Preview
 keymap("n", "<leader>mp", ":MarkdownPreview<CR>")
 
