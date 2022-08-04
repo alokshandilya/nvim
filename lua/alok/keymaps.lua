@@ -74,7 +74,7 @@ keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts) -- lazygit
 keymap("n", "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk()<CR>", opts) -- next hunk
 keymap("n", "<leader>gk", "<cmd>lua require 'gitsigns'.prev_hunk()<CR>", opts) -- prev hunk
-keymap("n", "<leader>gl", "<cmd>lua require 'gitsigns'.blame_line()<CR>", opts) -- blame
+keymap("n", "<leader>gll", "<cmd>lua require 'gitsigns'.blame_line()<CR>", opts) -- blame
 keymap("n", "<leader>gp", "<cmd>lua require 'gitsigns'.preview_hunk()<CR>", opts) -- preview hunk
 keymap("n", "<leader>grr", "<cmd>lua require 'gitsigns'.reset_hunk()<CR>", opts) -- reset hunk
 keymap("n", "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<CR>", opts) -- reset buffer
