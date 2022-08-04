@@ -76,7 +76,7 @@ keymap("n", "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk()<CR>", opts) -
 keymap("n", "<leader>gk", "<cmd>lua require 'gitsigns'.prev_hunk()<CR>", opts) -- prev hunk
 keymap("n", "<leader>gl", "<cmd>lua require 'gitsigns'.blame_line()<CR>", opts) -- blame
 keymap("n", "<leader>gp", "<cmd>lua require 'gitsigns'.preview_hunk()<CR>", opts) -- preview hunk
-keymap("n", "<leader>gr", "<cmd>lua require 'gitsigns'.reset_hunk()<CR>", opts) -- reset hunk
+keymap("n", "<leader>grr", "<cmd>lua require 'gitsigns'.reset_hunk()<CR>", opts) -- reset hunk
 keymap("n", "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<CR>", opts) -- reset buffer
 keymap("n", "<leader>gs", "<cmd>lua require 'gitsigns'.stage_hunk()<CR>", opts) -- stage hunk
 keymap("n", "<leader>gu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<CR>", opts) -- undo stage hunk
