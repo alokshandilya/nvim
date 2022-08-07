@@ -103,8 +103,8 @@ keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle_current_linewis
 keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
 
 -- Terminal [Toggle term]
-keymap("n", "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", opts)
-keymap("n", "<leader>tv", "<cmd>ToggleTerm size=70 direction=vertical<cr>", opts)
+keymap("n", "<leader>th", "<cmd>ToggleTerm size=16 direction=horizontal<cr>", opts)
+keymap("n", "<leader>tv", "<cmd>ToggleTerm size=60 direction=vertical<cr>", opts)
 
 -- DAP
 keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
