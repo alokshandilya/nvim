@@ -63,6 +63,7 @@ keymap("v", "lf", ":lua vim.lsp.buf.range_formatting()<CR>", opts)
 
 -- NvimTree
 keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+keymap("n", "<leader>Er", ":NvimTreeRefresh<CR>", opts)
 
 -- Telescope
 keymap("n", "<leader>ff", ":Telescope find_files<CR>", opts)
@@ -92,8 +93,8 @@ keymap("n", "<leader>gP", "<cmd>Git push<CR>", opts) -- git push
 keymap("n", "<leader>cc", ":ColorizerToggle<CR>")
 
 -- Icon Picker
-keymap("n", "<Leader><Leader>i", "<cmd>PickEverything<Cr>", opts)
-keymap("n", "<Leader><Leader>y", "<cmd>PickSymbols<Cr>", opts) --> Yank the selected icon into register
+keymap("n", "<leader><leader>i", "<cmd>IconPickerNormal alt_font symbols nerd_font emoji<cr>", opts)
+keymap("n", "<Leader><Leader>y", "<cmd>IconPickerYank alt_font symbols nerd_font emoji<cr>", opts) --> Yank the selected icon into register
 
 -- Markdown Preview
 keymap("n", "<leader>mp", ":MarkdownPreview<CR>")
