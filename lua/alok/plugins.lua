@@ -41,7 +41,8 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
   -- My plugins here
-  use({ "sainnhe/gruvbox-material", commit = "3db676452dcbcc75bcad2de49fb9855dc0113933" })
+  use({ "sainnhe/gruvbox-material" })
+  use({ "navarasu/onedark.nvim"})
   use({
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
@@ -50,17 +51,18 @@ return packer.startup(function(use)
     end,
     ft = { "markdown" },
   })
-  use({ "stevearc/dressing.nvim", commt = "1e60c07ae9a8557ac6395144606c3a5335ad47e0" })
+  use "stevearc/dressing.nvim"
   use({
-    "ziontee113/icon-picker.nvim", commit = "4f373fbb99ddd7f1a76c6b5a4b08be93aca6891f",
+    "ziontee113/icon-picker.nvim",
     config = function()
-      require("icon-picker")
+      require("icon-picker").setup({
+        disable_legacy_commands = false
+      })
     end,
   })
-  use({ "tpope/vim-fugitive", commit = "ff04324bffd86f9c146cc5fc2c0a2f95a1509643" })
   use({ "norcalli/nvim-colorizer.lua", commit = "36c610a9717cc9ec426a07c8e6bf3b3abcb139d6" })
 
-  use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" } -- Have packer manage itself
+  use { "wbthomason/packer.nvim", commit = "afab89594f4f702dc3368769c95b782dbdaeaf0a" } -- Have packer manage itself
   use { "nvim-lua/plenary.nvim", commit = "968a4b9afec0c633bc369662e78f8c5db0eba249" } -- Useful lua functions used by lots of plugins
   use { "windwp/nvim-autopairs", commit = "fa6876f832ea1b71801c4e481d8feca9a36215ec" } -- Autopairs, integrates with both cmp and treesitter
   use { "numToStr/Comment.nvim", commit = "2c26a00f32b190390b664e56e32fd5347613b9e2" }
@@ -105,6 +107,7 @@ return packer.startup(function(use)
 
   -- Git
   use { "lewis6991/gitsigns.nvim", commit = "c18e016864c92ecf9775abea1baaa161c28082c3" }
+  use({ "tpope/vim-fugitive", commit = "66a921bbe38bea19f6b581c8a56d5a8a41209e35" })
 
   -- DAP
   use { "mfussenegger/nvim-dap", commit = "014ebd53612cfd42ac8c131e6cec7c194572f21d" }
