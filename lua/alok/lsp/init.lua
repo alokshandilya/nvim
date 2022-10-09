@@ -3,6 +3,6 @@ if not status_ok then
   return
 end
 
-require "alok.lsp.lsp-installer"
+require "alok.lsp.mason"
 require("alok.lsp.handlers").setup()
 require "alok.lsp.null-ls"

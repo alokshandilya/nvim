@@ -56,7 +56,7 @@ keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
 
 -- format selected buffer
-keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
 keymap("v", "lf", ":lua vim.lsp.buf.range_formatting()<CR>", opts)
 
 -- Plugins --
