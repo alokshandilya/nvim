@@ -25,8 +25,22 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	spec = {
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
-		-- init.lua:
-		{ "nvim-telescope/telescope.nvim", tag = "0.1.8" },
+		{
+			"nvim-telescope/telescope.nvim",
+			tag = "0.1.8",
+			dependencies = { "nvim-lua/plenary.nvim" },
+		},
+		-- File Tree
+		{
+			"nvim-tree/nvim-tree.lua",
+			lazy = false,
+			requires = {
+				"nvim-tree/nvim-web-devicons",
+			},
+			config = function()
+				require("nvim-tree").setup({})
+			end,
+		},
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
