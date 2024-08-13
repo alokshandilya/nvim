@@ -1,22 +1,8 @@
-require "alok.options"
-require "alok.keymaps"
-require "alok.plugins"
-require "alok.autocommands"
-require "alok.colorscheme"
-require "alok.cmp"
-require "alok.telescope"
-require "alok.treesitter"
-require "alok.autopairs"
-require "alok.comment"
-require "alok.gitsigns"
-require "alok.nvim-tree"
-require "alok.bufferline"
-require "alok.lualine"
-require "alok.toggleterm"
-require "alok.project"
-require "alok.impatient"
-require "alok.illuminate"
-require "alok.indentline"
-require "alok.alpha"
-require "alok.lsp"
-require "alok.dap"
+require("aloks.options")
+require("aloks.keymaps")
+require("aloks.lazy")
+
+
+-- plugins
+require("plugins.gruvbox")
+require("plugins.keymaps") -- for plugins related keymaps
