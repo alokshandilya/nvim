@@ -41,6 +41,17 @@ require("lazy").setup({
 				require("nvim-tree").setup({})
 			end,
 		},
+		{ "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
+        -- install with yarn or npm
+        {
+          "iamcco/markdown-preview.nvim",
+          cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+          build = "cd app && yarn install",
+          init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+          end,
+          ft = { "markdown" },
+        },
 	},
 	-- Configure any other settings here. See the documentation for more details.
 	-- colorscheme that will be used when installing plugins.
