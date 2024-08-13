@@ -8,3 +8,6 @@ vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
 
 -- markdown preview
 vim.keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<cr>")
+
+-- format code using LSP
+vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
