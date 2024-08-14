@@ -21,3 +21,4 @@ vim.keymap.set("n", "<leader>tv", ":ToggleTerm size=70 direction=vertical name=v
 
 -- neogit
 vim.keymap.set("n", "<leader>ng", ":Neogit kind=vsplit<cr>")
+vim.keymap.set("n", "<leader>ngc", ":Neogit commit<cr>")
