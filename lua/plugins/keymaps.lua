@@ -11,6 +11,7 @@ vim.keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<cr>")
 
 -- format code using LSP
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
+vim.keymap.set("v", "<leader>lf", vim.lsp.buf.format)
 
 -- codesnap for code screenshots
 vim.api.nvim_set_keymap('v', '<leader>cs', ':CodeSnap<CR>', { noremap = true, silent = true })
