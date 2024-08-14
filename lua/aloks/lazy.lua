@@ -52,6 +52,10 @@ require("lazy").setup({
       end,
       ft = { "markdown" },
     },
+    {
+      'nvim-treesitter/nvim-treesitter',
+      build = ':TSUpdate',
+    },
     -- automatic setup of language servers
     {
       {
