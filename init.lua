@@ -10,6 +10,7 @@ require("plugins.nvim-treesitter")
 require("plugins.null-ls")
 require("plugins.codesnap")
 require("plugins.gitsigns")
+require("plugins.ibl")
 
 require("plugins.keymaps") -- for plugins related keymaps
 require("plugins.options") -- for plugins related options
