@@ -18,3 +18,6 @@ vim.api.nvim_set_keymap('v', '<leader>cs', ':CodeSnap<CR>', { noremap = true, si
 -- toggleterm
 vim.keymap.set("n", "<leader>th", ":ToggleTerm size=17 direction=horizontal name=horizontal<cr>")
 vim.keymap.set("n", "<leader>tv", ":ToggleTerm size=70 direction=vertical name=vertical<cr>")
+
+-- neogit
+vim.keymap.set("n", "<leader>ng", ":Neogit kind=vsplit<cr>")

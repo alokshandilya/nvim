@@ -38,7 +38,7 @@ require("lazy").setup({
 			},
 			config = true,
 		},
-
+		{ "lewis6991/gitsigns.nvim" },
 		{ "akinsho/toggleterm.nvim", version = "*", config = true },
 		{
 			"nvim-telescope/telescope.nvim",
