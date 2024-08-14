@@ -25,8 +25,21 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	spec = {
 		{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
-		-- code screenshot
 		{ "mistricky/codesnap.nvim", build = "make" },
+		{
+			"NeogitOrg/neogit",
+			dependencies = {
+				"nvim-lua/plenary.nvim", -- required
+				"sindrets/diffview.nvim", -- optional - Diff integration
+
+				-- Only one of these is needed, not both.
+				"nvim-telescope/telescope.nvim", -- optional
+				"ibhagwan/fzf-lua", -- optional
+			},
+			config = true,
+		},
+
+		{ "akinsho/toggleterm.nvim", version = "*", config = true },
 		{
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.8",
