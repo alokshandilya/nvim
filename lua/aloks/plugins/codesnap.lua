@@ -10,5 +10,9 @@ return {
       watermark = "",
       -- has_line_number = true,
     })
+
+    -- set keymaps
+    local keymap = vim.keymap -- for concise code
+    keymap.set("v", "<leader>csp", ":CodeSnap py<cr>")
   end,
 }

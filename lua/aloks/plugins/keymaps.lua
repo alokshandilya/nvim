@@ -12,14 +12,3 @@ vim.keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<cr>")
 -- format code using LSP
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
 vim.keymap.set("v", "<leader>lf", vim.lsp.buf.format)
-
--- codesnap for code screenshots
-vim.api.nvim_set_keymap('v', '<leader>cs', ':CodeSnap<CR>', { noremap = true, silent = true })
-
--- toggleterm
-vim.keymap.set("n", "<leader>th", ":ToggleTerm size=13 direction=horizontal name=horizontal<cr>")
-vim.keymap.set("n", "<leader>tv", ":ToggleTerm size=70 direction=vertical name=vertical<cr>")
-
--- neogit
-vim.keymap.set("n", "<leader>ng", ":Neogit kind=vsplit<cr>")
-vim.keymap.set("n", "<leader>ngc", ":Neogit commit<cr>")
