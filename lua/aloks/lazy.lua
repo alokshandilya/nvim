@@ -29,10 +29,10 @@ require("lazy").setup({
     {
       "NeogitOrg/neogit",
       dependencies = {
-        "nvim-lua/plenary.nvim", -- required
-        "sindrets/diffview.nvim", -- optional - Diff integration
+        "nvim-lua/plenary.nvim",         -- required
+        "sindrets/diffview.nvim",        -- optional - Diff integration
         "nvim-telescope/telescope.nvim", -- optional
-        "ibhagwan/fzf-lua",          -- optional
+        "ibhagwan/fzf-lua",              -- optional
       },
       config = true,
     },
@@ -62,7 +62,7 @@ require("lazy").setup({
         require("nvim-tree").setup({})
       end,
     },
-    { "akinsho/bufferline.nvim",            version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
+    { "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
     -- install with yarn or npm
     {
       "iamcco/markdown-preview.nvim",
