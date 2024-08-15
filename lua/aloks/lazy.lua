@@ -16,6 +16,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
+    { import = "aloks.plugins.init" },
+    { import = "aloks.plugins.auto-session" },
     { import = "aloks.plugins.colorscheme" },
     { import = "aloks.plugins.codesnap" },
     { import = "aloks.plugins.gitsigns" },
@@ -23,6 +25,13 @@ require("lazy").setup({
     { import = "aloks.plugins.lazygit" },
     { import = "aloks.plugins.neogit" },
     { import = "aloks.plugins.toggleterm" },
+    { import = "aloks.plugins.telescope" },
+    { import = "aloks.plugins.todo-comments" },
+    { import = "aloks.plugins.trouble" },
+    { import = "aloks.plugins.nvim-tree" },
+    { import = "aloks.plugins.markdown-preview" },
+    { import = "aloks.plugins.bufferline" },
+    { import = "aloks.plugins.lualine" },
     ------------------
     --- after test ---
     ------------------
@@ -35,40 +44,6 @@ require("lazy").setup({
   checker = { enabled = true },
 })
 
---     {
---       "nvim-telescope/telescope.nvim",
---       tag = "0.1.8",
---       dependencies = { "nvim-lua/plenary.nvim" },
---     },
---     {
---       "windwp/nvim-autopairs",
---       event = "InsertEnter",
---       config = true,
---     },
---     { "norcalli/nvim-colorizer.lua" },
---     { "github/copilot.vim" },
---     -- File Tree
---     {
---       "nvim-tree/nvim-tree.lua",
---       lazy = false,
---       requires = {
---         "nvim-tree/nvim-web-devicons",
---       },
---       config = function()
---         require("nvim-tree").setup({})
---       end,
---     },
---     { "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
---     -- install with yarn or npm
---     {
---       "iamcco/markdown-preview.nvim",
---       cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
---       build = "cd app && yarn install",
---       init = function()
---         vim.g.mkdp_filetypes = { "markdown" }
---       end,
---       ft = { "markdown" },
---     },
 --     {
 --       "nvim-treesitter/nvim-treesitter",
 --       build = ":TSUpdate",
@@ -113,10 +88,6 @@ require("lazy").setup({
 --             },
 --           })
 --         end,
---       },
---       {
---         "jose-elias-alvarez/null-ls.nvim",
---         requires = { "nvim-lua/plenary.nvim" },
 --       },
 --       {
 --         "neovim/nvim-lspconfig",
@@ -196,15 +167,5 @@ require("lazy").setup({
 --           })
 --         end,
 --       },
---       {
---         "nvim-lualine/lualine.nvim",
---         dependencies = { "nvim-tree/nvim-web-devicons" },
---       },
 --     },
 --   },
---   -- Configure any other settings here. See the documentation for more details.
---   -- colorscheme that will be used when installing plugins.
---   install = { colorscheme = { "gruvbox" } },
---   -- automatically check for plugin updates
---   checker = { enabled = true },
--- })
