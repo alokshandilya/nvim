@@ -16,38 +16,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    { import = "aloks.plugins.init" },
-    { import = "aloks.plugins.auto-session" },
-    { import = "aloks.plugins.colorscheme" },
-    { import = "aloks.plugins.codesnap" },
-    { import = "aloks.plugins.gitsigns" },
-    { import = "aloks.plugins.indent-blankline" },
-    { import = "aloks.plugins.lazygit" },
-    { import = "aloks.plugins.neogit" },
-    { import = "aloks.plugins.toggleterm" },
-    { import = "aloks.plugins.telescope" },
-    { import = "aloks.plugins.todo-comments" },
-    { import = "aloks.plugins.trouble" },
-    { import = "aloks.plugins.nvim-tree" },
-    { import = "aloks.plugins.markdown-preview" },
-    { import = "aloks.plugins.bufferline" },
-    { import = "aloks.plugins.lualine" },
-    ------------------
-    --- after test ---
-    ------------------
-    -- { import = "aloks.plugins" },
-    -- { import = "aloks.plugins.lsp" },
-    ------------------
-    --- after test ---
-    ------------------
+    { import = "aloks.plugins" },
+    { import = "aloks.plugins.lsp" },
   },
   checker = { enabled = true },
 })
 
---     {
---       "nvim-treesitter/nvim-treesitter",
---       build = ":TSUpdate",
---     },
 --     -- automatic setup of language servers
 --     {
 --       {
@@ -155,17 +129,3 @@ require("lazy").setup({
 --           })
 --         end,
 --       },
---       {
---         "rmagatti/auto-session",
---         lazy = false,
---         dependencies = {
---           "nvim-telescope/telescope.nvim", -- Only needed if you want to use sesssion lens
---         },
---         config = function()
---           require("auto-session").setup({
---             auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
---           })
---         end,
---       },
---     },
---   },
