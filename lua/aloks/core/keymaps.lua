@@ -1,10 +1,12 @@
 -- space bar as leader key
 vim.g.mapleader = " "
 
+local keymap = vim.keymap
+
 -- buffers
-vim.keymap.set("n", "<leader>bn", ":bn<cr>")
-vim.keymap.set("n", "<leader>bp", ":bp<cr>")
-vim.keymap.set("n", "<leader>bd", ":bd<cr>")
+keymap.set("n", "<leader>bn", ":bn<cr>")
+keymap.set("n", "<leader>bp", ":bp<cr>")
+keymap.set("n", "<leader>bd", ":bd<cr>")
 
 -- yank to clipboard
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+keymap.set({ "n", "v" }, "<leader>y", [["+y]])
