@@ -71,11 +71,10 @@ return {
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
 		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+		  local hl = "DiagnosticSign" .. type
+		  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
 		mason_lspconfig.setup_handlers({
@@ -193,9 +192,9 @@ return {
 						select = { "E", "F" },
 						extendSelect = { "W" },
 					},
-          format = {
-            preview = true,
-          },
+					format = {
+						preview = true,
+					},
 				},
 			},
 		})

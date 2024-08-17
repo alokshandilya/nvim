@@ -1,17 +1,30 @@
 return {
   "NeogitOrg/neogit",
-  event = "BufRead",
+  dependencies = {
+    "nvim-lua/plenary.nvim", -- required
+    "sindrets/diffview.nvim", -- optional - Diff integration
+
+    -- Only one of these is needed, not both.
+    "nvim-telescope/telescope.nvim", -- optional
+    "ibhagwan/fzf-lua", -- optional
+  },
+  keys = {
+    {
+      "<leader>ng",
+      "<cmd>Neogit kind=vsplit<cr>",
+      mode = "n",
+    },
+    {
+      "<leader>ngc",
+      "<cmd>Neogit commit<cr>",
+      mode = "n",
+    },
+  },
   dependcies = {
     "nvim-lua/plenary.nvim",
     "sindrets/diffview.nvim",
     "nvim-telescope/telescope.nvim",
     "ibhagwan/fzf-lua",
   },
-  config = function()
-    require("neogit").setup({})
-    -- set keymaps
-    local keymap = vim.keymap -- for concise code
-    keymap.set("n", "<leader>ng", ":Neogit kind=vsplit<cr>")
-    keymap.set("n", "<leader>ngc", ":Neogit commit<cr>")
-  end,
+  config = true,
 }

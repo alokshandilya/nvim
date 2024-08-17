@@ -1,4 +1,4 @@
-vim.g.python3_host_prog = os.getenv("HOME") .. ".pyenv/versions/3.12.3/bin/python" -- python code environment
+-- vim.g.python3_host_prog = os.getenv("HOME") .. ".pyenv/versions/3.12.3/bin/python" -- python code environment
 
 local options = {
   -- :help options

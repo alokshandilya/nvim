@@ -1,22 +1,22 @@
 return {
-  { "norcalli/nvim-colorizer.lua" },
+  { "NvChad/nvim-colorizer.lua", lazy = true },
   { "github/copilot.vim" },
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    dependencies = "nvim-tree/nvim-web-devicons"
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons", lazy = true },
+    },
   },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons", lazy = true },
+    },
   },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = true,
-  }
+  },
 }
