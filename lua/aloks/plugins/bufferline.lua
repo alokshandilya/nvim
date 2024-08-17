@@ -20,6 +20,23 @@ return {
       close_icon = "",
       left_trunc_marker = "",
       right_trunc_marker = "",
+      diagnostics = "nvim_lsp",
+      diagnostics_update_on_event = true, -- use nvim's diagnostic handler
+      diagnostics_indicator = function(count, level)
+        local icon = level:match("error") and " " or ""
+        return " " .. icon .. count
+      end,
+      offsets = {
+        {
+          filetype = "NvimTree",
+          text_align = "left",
+          highlight = "Directory",
+          separator = true,
+          text = "📂 File Explorer",
+        },
+      },
+      color_icons = true,
+      show_buffer_icons = true,
     },
   },
 }
