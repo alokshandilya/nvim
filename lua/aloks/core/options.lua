@@ -42,7 +42,7 @@ local options = {
   guifont = "FiraCode Nerd Font:h17"       -- the font used in graphical neovim applications
 }
 
-vim.opt.shortmess:append "c"
+vim.opt.shortmess:append("c")
 
 for k, v in pairs(options) do
   vim.opt[k] = v
