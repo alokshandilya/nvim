@@ -57,3 +57,6 @@ keymap("n", "<leader>bd", ":bd<cr>", opts)
 
 -- quit nvim
 keymap("n", "<leader>q", ":q<cr>", opts)
+
+-- write to buffers
+keymap("n", "<leader>w", ":w<cr>", opts)
