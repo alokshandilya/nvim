@@ -32,7 +32,7 @@ return {
           text_align = "left",
           highlight = "Directory",
           separator = true,
-          text = "📂 File Explorer",
+          text = "  File Explorer",
         },
       },
       color_icons = true,
