@@ -1,5 +1,12 @@
 return {
-  { "NvChad/nvim-colorizer.lua", lazy = true },
+  {
+    "NvChad/nvim-colorizer.lua",
+    keys = {
+      "<leader>cc",
+      "<cmd>ColorizerToggle<cr>",
+      mode = "n",
+    },
+  },
   { "github/copilot.vim" },
   {
     "akinsho/bufferline.nvim",
