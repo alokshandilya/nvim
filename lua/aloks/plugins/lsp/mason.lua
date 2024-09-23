@@ -36,6 +36,7 @@ return {
         "emmet_ls",
         "prismals",
         "pyright",
+        "ts_ls",
       },
     })
 
