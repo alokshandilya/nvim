@@ -162,41 +162,49 @@ return {
         },
         python = {
           analysis = {
-            -- Ignore all files for analysis to exclusively use Ruff for linting
-            ignore = { "*" },
+            typeCheckingMode = "basic", -- or "strict" for stricter checks
+            diagnosticMode = "workspace", -- or "openFilesOnly"
+            useLibraryCodeForTypes = true,
+            autoSearchPaths = true,
+            -- Add mypy-specific settings here
+            mypy = {
+              enabled = true,
+              -- args = { "--ignore-missing-imports", "--follow-imports=silent", "--show-column-numbers" },
+              args = { "--show-column-numbers" },
+            },
           },
         },
       },
     })
-    require("lspconfig").ruff.setup({
-      trace = "messages",
-      init_options = {
-        settings = {
-          logLevel = "info",
-          -- exclude = "**/tests/**",
-          lineLength = 79,
-          fixAll = true,
-          organizeImports = true,
-          showSyntaxErrors = true,
-          codeAction = {
-            disableRuleComment = {
-              enable = true,
-            },
-            fixViolation = {
-              enable = true,
-            },
-          },
-          lint = {
-            enable = true,
-            preview = true,
-            select = { "E", "F" },
-            extendSelect = { "W" },
-          },
-          format = {
-            preview = true,
-          },
-        },
-      },
-    })
+    -- require("lspconfig").ruff.setup({
+    --   trace = "messages",
+    --   init_options = {
+    --     settings = {
+    --       logLevel = "info",
+    --       -- exclude = "**/tests/**",
+    --       lineLength = 79,
+    --       fixAll = true,
+    --       organizeImports = true,
+    --       showSyntaxErrors = true,
+    --       codeAction = {
+    --         disableRuleComment = {
+    --           enable = true,
+    --         },
+    --         fixViolation = {
+    --           enable = true,
+    --         },
+    --       },
+    --       lint = {
+    --         enable = true,
+    --         preview = true,
+    --         select = { "E", "F" },
+    --         extendSelect = { "W" },
+    --       },
+    --       format = {
+    --         preview = true,
+    --       },
+    --     },
+    --   },
+    -- })
   end,
 }

@@ -5,13 +5,23 @@ return {
   keys = {
     {
       "<leader>th",
-      "<cmd>ToggleTerm size=13 direction=horizontal name=horizontal<cr>",
-      "n",
+      function()
+        require("toggleterm.terminal").Terminal
+          :new({ direction = "horizontal", size = 13 })
+          :toggle()
+      end,
+      mode = "n",
+      desc = "Horizontal Terminal",
     },
     {
       "<leader>tv",
-      "<cmd>ToggleTerm size=70 direction=vertical name=vertical<cr>",
-      "n",
+      function()
+        require("toggleterm.terminal").Terminal
+          :new({ direction = "vertical", size = 70 })
+          :toggle()
+      end,
+      mode = "n",
+      desc = "Vertical Terminal",
     },
   },
   config = true,

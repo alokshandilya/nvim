@@ -37,6 +37,7 @@ return {
         "prismals",
         "pyright",
         "ts_ls",
+        "hyprls",
       },
     })
 
