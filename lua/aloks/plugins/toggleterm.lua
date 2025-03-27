@@ -6,14 +6,20 @@ return {
     -- Horizontal Terminal Toggle
     {
       "<leader>th",
-      "<cmd>ToggleTerm size=13 direction=horizontal<CR>",
+      function()
+        local height = math.floor(vim.o.lines * 0.3) -- 30% of screen height
+        vim.cmd(string.format("ToggleTerm size=%d direction=horizontal", height))
+      end,
       mode = "n",
       desc = "Horizontal Terminal",
     },
     -- Vertical Terminal Toggle
     {
       "<leader>tv",
-      "<cmd>ToggleTerm size=70 direction=vertical<CR>",
+      function()
+        local width = math.floor(vim.o.columns * 0.4) -- 40% of screen width
+        vim.cmd(string.format("ToggleTerm size=%d direction=vertical", width))
+      end,
       mode = "n",
       desc = "Vertical Terminal",
     },
