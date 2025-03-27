@@ -1,11 +1,12 @@
 return {
   "ellisonleao/gruvbox.nvim",
   lazy = false,
-  priority = 1000,
+  priority = 1000, -- Ensure this loads early
   config = function()
-    require("gruvbox").setup({
-      terminal_colors = true, -- add neovim terminal colors
-      transparent_mode = true,
+    -- Define gruvbox settings in a table for clarity
+    local gruvbox_settings = {
+      terminal_colors = true, -- Enable Neovim terminal colors
+      transparent_mode = true, -- Enable transparent background
       undercurl = true,
       underline = true,
       bold = true,
@@ -20,8 +21,13 @@ return {
       invert_signs = false,
       invert_tabline = false,
       invert_intend_guides = false,
-      contrast = "hard", -- can be "hard", "soft" or empty string
-    })
+      contrast = "hard", -- Options: "hard", "soft", or ""
+    }
+
+    -- Apply gruvbox settings
+    require("gruvbox").setup(gruvbox_settings)
+
+    -- Set the colorscheme
     vim.cmd("colorscheme gruvbox")
   end,
 }
