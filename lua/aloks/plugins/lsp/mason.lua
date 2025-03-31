@@ -35,7 +35,7 @@ return {
         "graphql",
         "emmet_ls",
         "prismals",
-        "pyright",
+        "pylsp",  -- in place of pyright
         "ts_ls",
         "hyprls",
       },

@@ -154,24 +154,46 @@ return {
       end,
       desc = "LSP: Disable hover capability from Ruff",
     })
-    require("lspconfig").pyright.setup({
+    -- require("lspconfig").pyright.setup({
+    --   settings = {
+    --     pyright = {
+    --       -- Using Ruff's import organizer
+    --       disableOrganizeImports = true,
+    --     },
+    --     python = {
+    --       analysis = {
+    --         typeCheckingMode = "basic", -- or "strict" for stricter checks
+    --         diagnosticMode = "workspace", -- or "openFilesOnly"
+    --         useLibraryCodeForTypes = true,
+    --         autoSearchPaths = true,
+    --         -- Add mypy-specific settings here
+    --         mypy = {
+    --           enabled = true,
+    --           -- args = { "--ignore-missing-imports", "--follow-imports=silent", "--show-column-numbers" },
+    --           args = { "--show-column-numbers" },
+    --         },
+    --       },
+    --     },
+    --   },
+    -- })
+    require("lspconfig").pylsp.setup({
       settings = {
-        pyright = {
-          -- Using Ruff's import organizer
-          disableOrganizeImports = true,
-        },
-        python = {
-          analysis = {
-            typeCheckingMode = "basic", -- or "strict" for stricter checks
-            diagnosticMode = "workspace", -- or "openFilesOnly"
-            useLibraryCodeForTypes = true,
-            autoSearchPaths = true,
-            -- Add mypy-specific settings here
-            mypy = {
-              enabled = true,
-              -- args = { "--ignore-missing-imports", "--follow-imports=silent", "--show-column-numbers" },
-              args = { "--show-column-numbers" },
+        pylsp = {
+          plugins = {
+            pycodestyle = {
+              enabled = false,
+              -- ignore = { "W391" },
+              maxLineLength = 100,
             },
+            pyflakes = { enabled = false },
+            autopep8 = { enabled = false },
+            yapf = { enabled = false },
+            mccabe = { enabled = false },
+            pylsp_mypy = { enabled = true },
+            pylsp_black = { enabled = false },
+            pylsp_isort = { enabled = false },
+            rope = { enabled = true },
+            rope_autoimport = { enabled = true },
           },
         },
       },
