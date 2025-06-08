@@ -77,13 +77,17 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
-    mason_lspconfig.setup_handlers({
-      -- default handler for installed servers
-      function(server_name)
-        lspconfig[server_name].setup({
-          capabilities = capabilities,
-        })
-      end,
+    -- Set up LSP servers using the newer API
+    mason_lspconfig.setup({
+      -- Register a handler for all installed servers
+      handlers = {
+        function(server_name)
+          lspconfig[server_name].setup({
+            capabilities = capabilities,
+          })
+        end,
+      }
+    })
       -- ["svelte"] = function()
       --   -- configure svelte server
       --   lspconfig["svelte"].setup({
@@ -99,46 +103,43 @@ return {
       --     end,
       --   })
       -- end,
-      ["graphql"] = function()
-        -- configure graphql language server
-        lspconfig["graphql"].setup({
-          capabilities = capabilities,
-          filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-        })
-      end,
-      ["emmet_ls"] = function()
-        -- configure emmet language server
-        lspconfig["emmet_ls"].setup({
-          capabilities = capabilities,
-          filetypes = {
-            "html",
-            "typescriptreact",
-            "javascriptreact",
-            "css",
-            "sass",
-            "scss",
-            "less",
-            "svelte",
+    -- Set up specific servers directly
+    
+    -- configure graphql language server
+    lspconfig["graphql"].setup({
+      capabilities = capabilities,
+      filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+    })
+    
+    -- configure emmet language server
+    lspconfig["emmet_ls"].setup({
+      capabilities = capabilities,
+      filetypes = {
+        "html",
+        "typescriptreact",
+        "javascriptreact",
+        "css",
+        "sass",
+        "scss",
+        "less",
+        "svelte",
+      },
+    })
+    
+    -- configure lua server (with special settings)
+    lspconfig["lua_ls"].setup({
+      capabilities = capabilities,
+      settings = {
+        Lua = {
+          -- make the language server recognize "vim" global
+          diagnostics = {
+            globals = { "vim" },
           },
-        })
-      end,
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
-          capabilities = capabilities,
-          settings = {
-            Lua = {
-              -- make the language server recognize "vim" global
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
+          completion = {
+            callSnippet = "Replace",
           },
-        })
-      end,
+        },
+      },
     })
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
@@ -154,79 +155,90 @@ return {
       end,
       desc = "LSP: Disable hover capability from Ruff",
     })
-    -- require("lspconfig").pyright.setup({
-    --   settings = {
-    --     pyright = {
-    --       -- Using Ruff's import organizer
-    --       disableOrganizeImports = true,
-    --     },
-    --     python = {
-    --       analysis = {
-    --         typeCheckingMode = "basic", -- or "strict" for stricter checks
-    --         diagnosticMode = "workspace", -- or "openFilesOnly"
-    --         useLibraryCodeForTypes = true,
-    --         autoSearchPaths = true,
-    --         -- Add mypy-specific settings here
-    --         mypy = {
-    --           enabled = true,
-    --           -- args = { "--ignore-missing-imports", "--follow-imports=silent", "--show-column-numbers" },
-    --           args = { "--show-column-numbers" },
-    --         },
-    --       },
-    --     },
-    --   },
-    -- })
-    require("lspconfig").pylsp.setup({
+    require("lspconfig").pyright.setup({
       settings = {
-        pylsp = {
-          plugins = {
-            pycodestyle = {
-              enabled = false,
-              -- ignore = { "W391" },
-              maxLineLength = 100,
+        pyright = {
+          -- Using Ruff's import organizer
+          disableOrganizeImports = true,
+        },
+        python = {
+          analysis = {
+            typeCheckingMode = "basic", -- or "strict" for stricter checks
+            diagnosticMode = "workspace", -- or "openFilesOnly"
+            useLibraryCodeForTypes = true,
+            autoSearchPaths = true,
+            -- Add mypy-specific settings here
+            mypy = {
+              enabled = true,
+              -- args = { "--ignore-missing-imports", "--follow-imports=silent", "--show-column-numbers" },
+              args = { "--show-column-numbers" },
             },
-            pyflakes = { enabled = false },
-            autopep8 = { enabled = false },
-            yapf = { enabled = false },
-            mccabe = { enabled = false },
-            pylsp_mypy = { enabled = true },
-            pylsp_black = { enabled = false },
-            pylsp_isort = { enabled = false },
-            rope = { enabled = true },
-            rope_autoimport = { enabled = true },
           },
         },
       },
     })
-    -- require("lspconfig").ruff.setup({
-    --   trace = "messages",
-    --   init_options = {
-    --     settings = {
-    --       logLevel = "info",
-    --       -- exclude = "**/tests/**",
-    --       lineLength = 79,
-    --       fixAll = true,
-    --       organizeImports = true,
-    --       showSyntaxErrors = true,
-    --       codeAction = {
-    --         disableRuleComment = {
-    --           enable = true,
+    require("lspconfig").gopls.setup({
+      settings = {
+        gopls = {
+          analyses = {
+            unusedparams = true,
+          },
+          staticcheck = true,
+          gofumpt = true,
+        },
+      },
+    })
+    -- require("lspconfig").pylsp.setup({
+    --   settings = {
+    --     pylsp = {
+    --       plugins = {
+    --         pycodestyle = {
+    --           enabled = false,
+    --           -- ignore = { "W391" },
+    --           maxLineLength = 100,
     --         },
-    --         fixViolation = {
-    --           enable = true,
-    --         },
-    --       },
-    --       lint = {
-    --         enable = true,
-    --         preview = true,
-    --         select = { "E", "F" },
-    --         extendSelect = { "W" },
-    --       },
-    --       format = {
-    --         preview = true,
+    --         pyflakes = { enabled = false },
+    --         autopep8 = { enabled = false },
+    --         yapf = { enabled = false },
+    --         mccabe = { enabled = false },
+    --         pylsp_mypy = { enabled = true },
+    --         pylsp_black = { enabled = false },
+    --         pylsp_isort = { enabled = false },
+    --         rope = { enabled = true },
+    --         rope_autoimport = { enabled = true },
     --       },
     --     },
     --   },
     -- })
+    require("lspconfig").ruff.setup({
+      trace = "messages",
+      init_options = {
+        settings = {
+          logLevel = "info",
+          -- exclude = "**/tests/**",
+          lineLength = 79,
+          fixAll = true,
+          organizeImports = true,
+          showSyntaxErrors = true,
+          codeAction = {
+            disableRuleComment = {
+              enable = true,
+            },
+            fixViolation = {
+              enable = true,
+            },
+          },
+          lint = {
+            enable = true,
+            preview = true,
+            select = { "E", "F" },
+            extendSelect = { "W" },
+          },
+          format = {
+            preview = true,
+          },
+        },
+      },
+    })
   end,
 }
