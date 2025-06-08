@@ -1,4 +1,5 @@
 return {
+  { "github/copilot.vim" },
   {
     "NvChad/nvim-colorizer.lua",
     keys = {
@@ -7,7 +8,6 @@ return {
       mode = "n",
     },
   },
-  { "github/copilot.vim" },
   {
     "akinsho/bufferline.nvim",
     version = "*",
