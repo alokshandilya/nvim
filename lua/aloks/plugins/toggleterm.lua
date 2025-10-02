@@ -7,7 +7,7 @@ return {
     {
       "<leader>th",
       function()
-        local height = math.floor(vim.o.lines * 0.3) -- 30% of screen height
+        local height = math.floor(vim.o.lines * 0.5) -- 50% of screen height
         vim.cmd(string.format("ToggleTerm size=%d direction=horizontal", height))
       end,
       mode = "n",
