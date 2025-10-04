@@ -35,12 +35,13 @@ return {
                 "graphql",
                 "emmet_ls",
                 "prismals",
-                "pylsp", -- in place of pyright
+                "pyright", -- Primary Python LSP
+                "ruff",    -- Fast Python linter/formatter
                 "ts_ls",
                 "hyprls",
             },
             -- This setting enables automatic LSP setup when servers are installed
-            automatic_enable = true,
+            automatic_installation = true,
         })
 
         mason_tool_installer.setup({

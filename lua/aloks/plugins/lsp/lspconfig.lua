@@ -8,7 +8,7 @@ return {
     },
     config = function()
         -- import lspconfig plugin
-        local lspconfig = require("lspconfig")
+        -- migrated to vim.lsp.config API (no require('lspconfig') framework)
 
         -- import mason_lspconfig plugin
         local mason_lspconfig = require("mason-lspconfig")
@@ -27,19 +27,19 @@ return {
 
                 -- set keybinds
                 opts.desc = "Show LSP references"
-                keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
+                keymap.set("n", "gR", vim.lsp.buf.references, opts) -- show references
 
                 opts.desc = "Go to declaration"
                 keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
 
                 opts.desc = "Show LSP definitions"
-                keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
+                keymap.set("n", "gd", vim.lsp.buf.definition, opts) -- go to definition
 
                 opts.desc = "Show LSP implementations"
-                keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
+                keymap.set("n", "gi", vim.lsp.buf.implementation, opts) -- show implementations
 
                 opts.desc = "Show LSP type definitions"
-                keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+                keymap.set("n", "gt", vim.lsp.buf.type_definition, opts) -- go to type definition
 
                 opts.desc = "See available code actions"
                 keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
@@ -69,24 +69,36 @@ return {
 
         -- used to enable autocompletion (assign to every lsp server config)
         local capabilities = cmp_nvim_lsp.default_capabilities()
+        capabilities.offsetEncoding = { "utf-16" }
+
+        -- Force unified UTF-16 offset_encoding across all clients to avoid mixed encodings warnings
+        -- See :help vim.lsp.Config and :help lsp for details.
+        vim.lsp.config("*", {
+            offset_encoding = "utf-16",
+        })
 
         -- Change the Diagnostic symbols in the sign column (gutter)
-        local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-        end
+        vim.diagnostic.config({
+            signs = {
+                text = {
+                    [vim.diagnostic.severity.ERROR] = " ",
+                    [vim.diagnostic.severity.WARN]  = " ",
+                    [vim.diagnostic.severity.HINT]  = "󰠠 ",
+                    [vim.diagnostic.severity.INFO]  = " ",
+                },
+            },
+        })
 
         -- Configure language servers directly
 
         -- Configure graphql language server
-        lspconfig["graphql"].setup({
+        vim.lsp.config("graphql", {
             capabilities = capabilities,
             filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
         })
 
         -- Configure emmet language server
-        lspconfig["emmet_ls"].setup({
+        vim.lsp.config("emmet_ls", {
             capabilities = capabilities,
             filetypes = {
                 "html",
@@ -101,7 +113,7 @@ return {
         })
 
         -- Configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
+        vim.lsp.config("lua_ls", {
             capabilities = capabilities,
             settings = {
                 Lua = {
@@ -116,15 +128,41 @@ return {
             },
         })
 
+        -- Configure pyright for excellent Python support
+        vim.lsp.config("pyright", {
+            capabilities = capabilities,
+            settings = {
+                python = {
+                    analysis = {
+                        autoSearchPaths = true,
+                        useLibraryCodeForTypes = true,
+                        diagnosticMode = "openFilesOnly",
+                        typeCheckingMode = "basic",
+                    },
+                },
+            },
+        })
+
+        -- Configure ruff for fast Python linting
+        vim.lsp.config("ruff", {
+            capabilities = capabilities,
+            init_options = {
+                settings = {
+                    args = {},
+                },
+            },
+        })
+
         -- For any other server that doesn't need special configuration
-        local servers = { "html", "cssls", "tailwindcss", "svelte", "prismals", "pylsp", "ts_ls", "hyprls" }
+        local servers = { "html", "cssls", "tailwindcss", "svelte", "prismals", "pyright", "ruff", "ts_ls", "hyprls" }
         for _, server in ipairs(servers) do
-            if server ~= "graphql" and server ~= "emmet_ls" and server ~= "lua_ls" then
-                lspconfig[server].setup({
+            if server ~= "graphql" and server ~= "emmet_ls" and server ~= "lua_ls" and server ~= "pyright" and server ~= "ruff" then
+                vim.lsp.config(server, {
                     capabilities = capabilities,
                 })
             end
         end
+        -- Disable hover capability from Ruff in favor of Pyright
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
             callback = function(args)
@@ -139,79 +177,23 @@ return {
             end,
             desc = "LSP: Disable hover capability from Ruff",
         })
-        -- require("lspconfig").pyright.setup({
-        --   settings = {
-        --     pyright = {
-        --       -- Using Ruff's import organizer
-        --       disableOrganizeImports = true,
-        --     },
-        --     python = {
-        --       analysis = {
-        --         typeCheckingMode = "basic", -- or "strict" for stricter checks
-        --         diagnosticMode = "workspace", -- or "openFilesOnly"
-        --         useLibraryCodeForTypes = true,
-        --         autoSearchPaths = true,
-        --         -- Add mypy-specific settings here
-        --         mypy = {
-        --           enabled = true,
-        --           -- args = { "--ignore-missing-imports", "--follow-imports=silent", "--show-column-numbers" },
-        --           args = { "--show-column-numbers" },
-        --         },
-        --       },
-        --     },
-        --   },
-        -- })
-        require("lspconfig").pylsp.setup({
-            settings = {
-                pylsp = {
-                    plugins = {
-                        pycodestyle = {
-                            enabled = false,
-                            -- ignore = { "W391" },
-                            maxLineLength = 100,
-                        },
-                        pyflakes = { enabled = false },
-                        autopep8 = { enabled = false },
-                        yapf = { enabled = false },
-                        mccabe = { enabled = false },
-                        pylsp_mypy = { enabled = true },
-                        pylsp_black = { enabled = false },
-                        pylsp_isort = { enabled = false },
-                        rope = { enabled = true },
-                        rope_autoimport = { enabled = true },
-                    },
-                },
-            },
-        })
-        -- require("lspconfig").ruff.setup({
-        --   trace = "messages",
-        --   init_options = {
-        --     settings = {
-        --       logLevel = "info",
-        --       -- exclude = "**/tests/**",
-        --       lineLength = 79,
-        --       fixAll = true,
-        --       organizeImports = true,
-        --       showSyntaxErrors = true,
-        --       codeAction = {
-        --         disableRuleComment = {
-        --           enable = true,
-        --         },
-        --         fixViolation = {
-        --           enable = true,
-        --         },
-        --       },
-        --       lint = {
-        --         enable = true,
-        --         preview = true,
-        --         select = { "E", "F" },
-        --         extendSelect = { "W" },
-        --       },
-        --       format = {
-        --         preview = true,
-        --       },
-        --     },
-        --   },
-        -- })
+
+        -- Enable all configured servers so they auto-attach by filetype/root
+        for _, server in ipairs({
+            "graphql",
+            "emmet_ls",
+            "lua_ls",
+            "html",
+            "cssls",
+            "tailwindcss",
+            "svelte",
+            "prismals",
+            "pyright",
+            "ruff",
+            "ts_ls",
+            "hyprls",
+        }) do
+            vim.lsp.enable(server)
+        end
     end,
 }

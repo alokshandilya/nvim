@@ -1,15 +1,13 @@
 require("aloks.core.options")
 require("aloks.core.keymaps")
 
--- Hyprlang LSP
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-  pattern = { "*.hl", "hypr*.conf" },
-  callback = function(event)
-    print(string.format("starting hyprls for %s", vim.inspect(event)))
-    vim.lsp.start({
-      name = "hyprlang",
-      cmd = { "hyprls" },
-      root_dir = vim.fn.getcwd(),
-    })
-  end,
+-- Hyprlang LSP is managed via vim.lsp.config/enable in plugins; no manual autocmd here.
+vim.filetype.add({
+    pattern = {
+        [".*/hypr/.*%.conf"] = "hyprlang",
+        ["hypr.*%.conf"] = "hyprlang",
+    },
+    extension = {
+        hl = "hyprlang",
+    },
 })
