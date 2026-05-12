@@ -83,6 +83,22 @@ return {
       mode = "n",
       desc = "Scroll opencode down",
     },
+    {
+      "<leader>oc",
+      function()
+        require("opencode").prompt(
+          table.concat({
+            "Write a concise Conventional Commit message for this diff:",
+            "@staged_diff",
+            "Return only the commit message.",
+            "Use a subject line and include a short body only if it adds useful context.",
+          }, "\n\n"),
+          { submit = true }
+        )
+      end,
+      mode = "n",
+      desc = "Write commit message",
+    },
   },
   config = function()
     local width = function()
@@ -103,6 +119,28 @@ return {
             width = width(),
           })
         end,
+      },
+      contexts = {
+        ["@staged_diff"] = function()
+          local diff = vim.fn.system({ "git", "diff", "--cached" })
+
+          if vim.v.shell_error ~= 0 or diff == "" then
+            diff = vim.fn.system({ "git", "diff" })
+          end
+
+          return diff
+        end,
+      },
+      prompts = {
+        commit = {
+          prompt = table.concat({
+            "Write a concise Conventional Commit message for this diff:",
+            "@staged_diff",
+            "Return only the commit message.",
+            "Use a subject line and include a short body only if it adds useful context.",
+          }, "\n\n"),
+          submit = true,
+        },
       },
     }
     vim.o.autoread = true
