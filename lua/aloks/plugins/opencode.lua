@@ -1,3 +1,70 @@
+local function staged_diff()
+  local diff = vim.fn.system({ "git", "diff", "--cached" })
+
+  if vim.v.shell_error ~= 0 or diff == "" then
+    diff = vim.fn.system({ "git", "diff" })
+  end
+
+  return diff
+end
+
+local function commit_prompt(diff)
+  return table.concat({
+    "Write a concise Conventional Commit message for this diff:",
+    diff,
+    "Return only the commit message.",
+    "Use a subject line and include a short body only if it adds useful context.",
+  }, "\n\n")
+end
+
+local function strip_ansi(text)
+  return text:gsub("\27%[[0-9;?]*[ -/]*[@-~]", "")
+end
+
+local function clean_opencode_output(text)
+  local lines = vim.split(strip_ansi(text), "\n", { trimempty = true })
+  local output = {}
+
+  for _, line in ipairs(lines) do
+    if not line:match("^>%s") then
+      table.insert(output, line)
+    end
+  end
+
+  return vim.trim(table.concat(output, "\n"))
+end
+
+local function generate_commit_message()
+  local diff = staged_diff()
+
+  if diff == "" then
+    vim.notify("No staged or unstaged git diff found", vim.log.levels.WARN, { title = "opencode" })
+    return
+  end
+
+  vim.notify("Generating commit message...", vim.log.levels.INFO, { title = "opencode" })
+
+  vim.system({ "opencode", "run", commit_prompt(diff) }, { text = true }, function(result)
+    vim.schedule(function()
+      if result.code ~= 0 then
+        vim.notify(result.stderr or "Failed to generate commit message", vim.log.levels.ERROR, { title = "opencode" })
+        return
+      end
+
+      local message = clean_opencode_output(result.stdout or "")
+
+      if message == "" then
+        vim.notify("OpenCode returned an empty commit message", vim.log.levels.WARN, { title = "opencode" })
+        return
+      end
+
+      vim.fn.setreg("+", message)
+      vim.fn.setreg('"', message)
+      vim.notify("Commit message copied to clipboard", vim.log.levels.INFO, { title = "opencode" })
+    end)
+  end)
+end
+
 return {
   "nickjvandyke/opencode.nvim",
   version = "*",
@@ -85,19 +152,9 @@ return {
     },
     {
       "<leader>oc",
-      function()
-        require("opencode").prompt(
-          table.concat({
-            "Write a concise Conventional Commit message for this diff:",
-            "@staged_diff",
-            "Return only the commit message.",
-            "Use a subject line and include a short body only if it adds useful context.",
-          }, "\n\n"),
-          { submit = true }
-        )
-      end,
+      generate_commit_message,
       mode = "n",
-      desc = "Write commit message",
+      desc = "Copy commit message",
     },
   },
   config = function()
@@ -121,15 +178,7 @@ return {
         end,
       },
       contexts = {
-        ["@staged_diff"] = function()
-          local diff = vim.fn.system({ "git", "diff", "--cached" })
-
-          if vim.v.shell_error ~= 0 or diff == "" then
-            diff = vim.fn.system({ "git", "diff" })
-          end
-
-          return diff
-        end,
+        ["@staged_diff"] = staged_diff,
       },
       prompts = {
         commit = {
