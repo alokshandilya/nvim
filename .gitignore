@@ -1,6 +1,8 @@
 # Compiled Lua sources
 luac.out
 
+AGENTS.md
+
 # luarocks build files
 *.src.rock
 *.zip

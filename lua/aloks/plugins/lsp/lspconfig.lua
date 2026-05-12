@@ -154,7 +154,8 @@ return {
         })
 
         -- For any other server that doesn't need special configuration
-        local servers = { "html", "cssls", "tailwindcss", "svelte", "prismals", "pyright", "ruff", "ts_ls", "hyprls" }
+        -- local servers = { "html", "cssls", "tailwindcss", "svelte", "prismals", "pyright", "ruff", "ts_ls", "hyprls" }
+        local servers = { "html", "cssls", "tailwindcss", "svelte", "prismals", "pyright", "ruff", "ts_ls" }
         for _, server in ipairs(servers) do
             if server ~= "graphql" and server ~= "emmet_ls" and server ~= "lua_ls" and server ~= "pyright" and server ~= "ruff" then
                 vim.lsp.config(server, {
@@ -191,7 +192,7 @@ return {
             "pyright",
             "ruff",
             "ts_ls",
-            "hyprls",
+            -- "hyprls",
         }) do
             vim.lsp.enable(server)
         end
