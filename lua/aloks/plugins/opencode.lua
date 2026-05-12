@@ -34,6 +34,39 @@ local function clean_opencode_output(text)
   return vim.trim(table.concat(output, "\n"))
 end
 
+local function parse_opencode_json_output(text)
+  local parts = {}
+  local session_id
+
+  for line in text:gmatch("[^\n]+") do
+    local ok, event = pcall(vim.json.decode, line)
+
+    if ok and event then
+      session_id = session_id or event.sessionID
+
+      if event.type == "text" and event.part and event.part.text then
+        table.insert(parts, event.part.text)
+      end
+    end
+  end
+
+  return vim.trim(table.concat(parts, "")), session_id
+end
+
+local function delete_opencode_session(session_id)
+  if not session_id then
+    return
+  end
+
+  vim.system({ "opencode", "session", "delete", session_id }, { text = true }, function(result)
+    if result.code ~= 0 then
+      vim.schedule(function()
+        vim.notify("Failed to delete temporary session: " .. session_id, vim.log.levels.WARN, { title = "opencode" })
+      end)
+    end
+  end)
+end
+
 local function generate_commit_message()
   local diff = staged_diff()
 
@@ -44,22 +77,28 @@ local function generate_commit_message()
 
   vim.notify("Generating commit message...", vim.log.levels.INFO, { title = "opencode" })
 
-  vim.system({ "opencode", "run", commit_prompt(diff) }, { text = true }, function(result)
+  vim.system({ "opencode", "run", "--format", "json", commit_prompt(diff) }, { text = true }, function(result)
     vim.schedule(function()
       if result.code ~= 0 then
         vim.notify(result.stderr or "Failed to generate commit message", vim.log.levels.ERROR, { title = "opencode" })
         return
       end
 
-      local message = clean_opencode_output(result.stdout or "")
+      local message, session_id = parse_opencode_json_output(result.stdout or "")
+
+      if message == "" then
+        message = clean_opencode_output(result.stdout or "")
+      end
 
       if message == "" then
         vim.notify("OpenCode returned an empty commit message", vim.log.levels.WARN, { title = "opencode" })
+        delete_opencode_session(session_id)
         return
       end
 
       vim.fn.setreg("+", message)
       vim.fn.setreg('"', message)
+      delete_opencode_session(session_id)
       vim.notify("Commit message copied to clipboard", vim.log.levels.INFO, { title = "opencode" })
     end)
   end)
