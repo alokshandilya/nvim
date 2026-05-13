@@ -108,6 +108,7 @@ return {
   "nickjvandyke/opencode.nvim",
   version = "*",
   dependencies = {
+    "akinsho/toggleterm.nvim",
     {
       "folke/snacks.nvim",
       optional = true,
@@ -198,22 +199,68 @@ return {
   },
   config = function()
     local width = function()
-      return math.floor(vim.o.columns * 0.5)
+      return math.floor(vim.o.columns * 0.45)
     end
+
+    local Terminal = require("toggleterm.terminal").Terminal
+    local configured_terminals = {}
+    local set_terminal_keymaps = function(buf)
+      local opts = { buffer = buf }
+
+      vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], vim.tbl_extend("force", opts, {
+        desc = "Move to left window",
+      }))
+
+      vim.keymap.set("n", "<C-u>", function()
+        require("opencode").command("session.half.page.up")
+      end, vim.tbl_extend("force", opts, { desc = "Scroll up half page" }))
+
+      vim.keymap.set("n", "<C-d>", function()
+        require("opencode").command("session.half.page.down")
+      end, vim.tbl_extend("force", opts, { desc = "Scroll down half page" }))
+
+      vim.keymap.set("n", "gg", function()
+        require("opencode").command("session.first")
+      end, vim.tbl_extend("force", opts, { desc = "Go to first message" }))
+
+      vim.keymap.set("n", "G", function()
+        require("opencode").command("session.last")
+      end, vim.tbl_extend("force", opts, { desc = "Go to last message" }))
+
+      vim.keymap.set("n", "<Esc>", function()
+        require("opencode").command("session.interrupt")
+      end, vim.tbl_extend("force", opts, { desc = "Interrupt current session" }))
+    end
+
+    local opencode_terminal = Terminal:new({
+      cmd = "opencode --port",
+      direction = "vertical",
+      display_name = "opencode",
+      close_on_exit = true,
+      hidden = true,
+      on_open = function(term)
+        if configured_terminals[term.bufnr] then
+          return
+        end
+
+        configured_terminals[term.bufnr] = true
+        require("opencode.terminal").setup(term.window)
+        set_terminal_keymaps(term.bufnr)
+      end,
+    })
 
     vim.g.opencode_opts = {
       server = {
         start = function()
-          require("opencode.terminal").open("opencode --port", {
-            split = "right",
-            width = width(),
-          })
+          if not opencode_terminal:is_open() then
+            opencode_terminal:open(width(), "vertical")
+          end
         end,
         toggle = function()
-          require("opencode.terminal").toggle("opencode --port", {
-            split = "right",
-            width = width(),
-          })
+          opencode_terminal:toggle(width(), "vertical")
+        end,
+        stop = function()
+          opencode_terminal:shutdown()
         end,
       },
       contexts = {
