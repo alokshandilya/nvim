@@ -207,9 +207,14 @@ return {
     local set_terminal_keymaps = function(buf)
       local opts = { buffer = buf }
 
-      vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], vim.tbl_extend("force", opts, {
-        desc = "Move to left window",
-      }))
+      vim.keymap.set(
+        "t",
+        "<C-h>",
+        [[<C-\><C-n><C-w>h]],
+        vim.tbl_extend("force", opts, {
+          desc = "Move to left window",
+        })
+      )
 
       vim.keymap.set("n", "<C-u>", function()
         require("opencode").command("session.half.page.up")
@@ -237,12 +242,21 @@ return {
       direction = "vertical",
       display_name = "opencode",
       close_on_exit = true,
+      env = {
+        COLORTERM = "truecolor",
+        TERM = "xterm-256color",
+      },
       hidden = true,
       on_open = function(term)
         if configured_terminals[term.bufnr] then
           return
         end
 
+        vim.api.nvim_set_option_value(
+          "winhighlight",
+          "Normal:ToggleTermNormal,NormalFloat:ToggleTermNormalFloat,FloatBorder:FloatBorder",
+          { win = term.window }
+        )
         configured_terminals[term.bufnr] = true
         require("opencode.terminal").setup(term.window)
         set_terminal_keymaps(term.bufnr)

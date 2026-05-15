@@ -37,8 +37,8 @@ return {
       open_mapping = [[<C-\>]], -- Default mapping to open terminal
       hide_numbers = true, -- Hide line numbers in terminal buffers
       shade_filetypes = {}, -- Filetypes to shade when terminal is open
-      shade_terminals = true, -- Shade the terminal background
-      shading_factor = "1", -- Shading level (0-1)
+      shade_terminals = false, -- Keep terminal buffers transparent
+      shading_factor = "0", -- Shading level (0-1)
       start_in_insert = true, -- Start terminal in insert mode
       insert_mappings = true, -- Enable mappings in insert mode
       persist_size = true, -- Persist terminal size across sessions
@@ -48,10 +48,13 @@ return {
       autochdir = false, -- Change directory to the file's directory
       highlights = {
         Normal = {
-          guibg = "#1e222a", -- Background color
+          guibg = "none",
         },
         NormalFloat = {
-          link = "Normal",
+          guibg = "none",
+        },
+        FloatBorder = {
+          guibg = "none",
         },
       },
     })
