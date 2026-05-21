@@ -54,7 +54,7 @@ vim.cmd([[set iskeyword+=-]]) -- treat hyphens as part of a word
 
 if vim.g.neovide then
   vim.o.guifont = "JetBrainsMono Nerd Font:h17"
-  vim.g.neovide_opacity = 0.60
+  vim.g.neovide_opacity = 0.70
   vim.g.neovide_normal_opacity = 0.4
   vim.g.neovide_window_blurred = true
   vim.g.neovide_floating_blur_amount_x = 4.0
