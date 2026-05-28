@@ -16,6 +16,14 @@ return {
       return math.floor(vim.o.columns * 0.2) -- 20% of the screen width
     end
 
+    -- Determine the best trash command based on available executables
+    local trash_cmd = "trash"
+    if vim.fn.executable("trash") == 1 then
+      trash_cmd = "trash"
+    elseif vim.fn.executable("gio") == 1 then
+      trash_cmd = "gio trash"
+    end
+
     -- Default settings for nvim-tree
     nvimtree.setup({
       -- General behavior
@@ -137,7 +145,7 @@ return {
         },
       },
       trash = {
-        cmd = "gio trash", -- Command for deleting files
+        cmd = trash_cmd, -- Command for deleting files
       },
     })
 
@@ -288,7 +296,7 @@ return {
 --         },
 --       },
 --       trash = {
---         cmd = "gio trash", -- Command for deleting files
+--         cmd = "trash", -- Command for deleting files
 --       },
 --     })
 --
@@ -541,7 +549,7 @@ return {
 --         },
 --       },
 --       trash = {
---         cmd = "gio trash",
+--         cmd = "trash",
 --       },
 --       tab = {
 --         sync = {
