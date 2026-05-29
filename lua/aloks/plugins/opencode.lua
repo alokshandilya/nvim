@@ -9,11 +9,26 @@ local function staged_diff()
 end
 
 local function commit_prompt(diff)
+  local lines = vim.split(diff, "\n")
+  local changed_lines = 0
+  for _, line in ipairs(lines) do
+    if (line:sub(1, 1) == "+" and line:sub(1, 3) ~= "+++") or (line:sub(1, 1) == "-" and line:sub(1, 3) ~= "---") then
+      changed_lines = changed_lines + 1
+    end
+  end
+
+  local prompt_body
+  if changed_lines > 20 then
+    prompt_body = "Use a subject line and include a detailed description of the changes in bullet points in the body."
+  else
+    prompt_body = "Use a subject line and include a short body only if it adds useful context."
+  end
+
   return table.concat({
     "Write a concise Conventional Commit message for this diff:",
     diff,
     "Return only the commit message.",
-    "Use a subject line and include a short body only if it adds useful context.",
+    prompt_body,
   }, "\n\n")
 end
 
