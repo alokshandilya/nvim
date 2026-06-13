@@ -119,6 +119,9 @@ local function generate_commit_message()
   end)
 end
 
+-- Module-level so the keys callbacks can reference it after config() runs
+local opencode_terminal
+
 return {
   "nickjvandyke/opencode.nvim",
   version = "*",
@@ -129,20 +132,6 @@ return {
       optional = true,
       opts = {
         input = {},
-        picker = {
-          actions = {
-            opencode_send = function(...)
-              return require("opencode").snacks_picker_send(...)
-            end,
-          },
-          win = {
-            input = {
-              keys = {
-                ["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
-              },
-            },
-          },
-        },
       },
     },
   },
@@ -150,7 +139,7 @@ return {
     {
       "<leader>oa",
       function()
-        require("opencode").ask("@this: ", { submit = true })
+        require("opencode").ask("@this: ")
       end,
       mode = { "n", "x" },
       desc = "Ask opencode",
@@ -166,7 +155,9 @@ return {
     {
       "<leader>ot",
       function()
-        require("opencode").toggle()
+        if opencode_terminal then
+          opencode_terminal:toggle(math.floor(vim.o.columns * 0.45), "vertical")
+        end
       end,
       mode = "n",
       desc = "Toggle opencode",
@@ -252,7 +243,7 @@ return {
       end, vim.tbl_extend("force", opts, { desc = "Interrupt current session" }))
     end
 
-    local opencode_terminal = Terminal:new({
+    opencode_terminal = Terminal:new({
       cmd = "opencode --port",
       direction = "vertical",
       display_name = "opencode",
@@ -273,7 +264,6 @@ return {
           { win = term.window }
         )
         configured_terminals[term.bufnr] = true
-        require("opencode.terminal").setup(term.window)
         set_terminal_keymaps(term.bufnr)
       end,
     })

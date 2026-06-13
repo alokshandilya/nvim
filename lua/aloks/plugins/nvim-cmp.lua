@@ -46,6 +46,7 @@ return {
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
+        { name = "lazydev", group_index = 0 }, -- lazydev must be highest priority
         { name = "nvim_lsp", priority = 1000 },
         { name = "luasnip", priority = 750 }, -- snippets
         { name = "buffer", priority = 500 }, -- text within current buffer

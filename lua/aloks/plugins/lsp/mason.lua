@@ -40,8 +40,8 @@ return {
         "ts_ls",
         -- "hyprls",
       },
-      -- This setting enables automatic LSP setup when servers are installed
-      automatic_installation = true,
+      -- Disable auto-enable since lspconfig.lua calls vim.lsp.enable() explicitly
+      automatic_enable = false,
     })
 
     mason_tool_installer.setup({

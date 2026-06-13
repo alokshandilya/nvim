@@ -32,7 +32,6 @@ return {
       hijack_cursor = false,
       hijack_netrw = true,
       hijack_unnamed_buffer_when_opening = false,
-      open_on_tab = false,
       sort_by = "name", -- Sort files by name
       view = {
         adaptive_size = false, -- Don't adjust size dynamically
