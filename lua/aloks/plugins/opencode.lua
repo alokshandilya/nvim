@@ -19,104 +19,62 @@ local function commit_prompt(diff)
 
   local prompt_body
   if changed_lines > 20 then
-    prompt_body = "Use a subject line and include a detailed description of the changes in bullet points in the body."
+    prompt_body = "Include a detailed body describing the changes."
+      .. " If there are several distinct changes, write the body as bullet points"
+      .. " starting with '- '; if there is only one change, use a short prose"
+      .. " paragraph instead."
   else
-    prompt_body = "Use a subject line and include a short body only if it adds useful context."
+    prompt_body = "Include a short body only if it adds useful context;"
+      .. " omit it entirely if the subject line is self-explanatory."
   end
 
   return table.concat({
     "Write a concise Conventional Commit message for this diff:",
     diff,
-    "Return only the commit message.",
+    "Return only the commit message, nothing else (no explanation, no code fences).",
+    "The subject line MUST follow the format: type(optional scope): description",
+    "where type is one of: feat, fix, refactor, perf, docs, style, test, build, ci, chore.",
+    "Use imperative mood, lowercase description, and no trailing period.",
+    "Keep the subject line under 50 characters.",
+    "Leave one blank line between the subject and the body.",
+    "In the body, wrap lines at 72 characters.",
     prompt_body,
   }, "\n\n")
-end
-
-local function strip_ansi(text)
-  return text:gsub("\27%[[0-9;?]*[ -/]*[@-~]", "")
-end
-
-local function clean_opencode_output(text)
-  local lines = vim.split(strip_ansi(text), "\n", { trimempty = true })
-  local output = {}
-
-  for _, line in ipairs(lines) do
-    if not line:match("^>%s") then
-      table.insert(output, line)
-    end
-  end
-
-  return vim.trim(table.concat(output, "\n"))
-end
-
-local function parse_opencode_json_output(text)
-  local parts = {}
-  local session_id
-
-  for line in text:gmatch("[^\n]+") do
-    local ok, event = pcall(vim.json.decode, line)
-
-    if ok and event then
-      session_id = session_id or event.sessionID
-
-      if event.type == "text" and event.part and event.part.text then
-        table.insert(parts, event.part.text)
-      end
-    end
-  end
-
-  return vim.trim(table.concat(parts, "")), session_id
-end
-
-local function delete_opencode_session(session_id)
-  if not session_id then
-    return
-  end
-
-  vim.system({ "opencode", "session", "delete", session_id }, { text = true }, function(result)
-    if result.code ~= 0 then
-      vim.schedule(function()
-        vim.notify("Failed to delete temporary session: " .. session_id, vim.log.levels.WARN, { title = "opencode" })
-      end)
-    end
-  end)
 end
 
 local function generate_commit_message()
   local diff = staged_diff()
 
   if diff == "" then
-    vim.notify("No staged or unstaged git diff found", vim.log.levels.WARN, { title = "opencode" })
+    vim.notify("No staged or unstaged git diff found", vim.log.levels.WARN, { title = "claude" })
     return
   end
 
-  vim.notify("Generating commit message...", vim.log.levels.INFO, { title = "opencode" })
+  vim.notify("Generating commit message...", vim.log.levels.INFO, { title = "claude" })
 
-  vim.system({ "opencode", "run", "--format", "json", commit_prompt(diff) }, { text = true }, function(result)
-    vim.schedule(function()
-      if result.code ~= 0 then
-        vim.notify(result.stderr or "Failed to generate commit message", vim.log.levels.ERROR, { title = "opencode" })
-        return
-      end
+  vim.system(
+    { "claude", "-p", "--model", "sonnet" },
+    { text = true, stdin = commit_prompt(diff) },
+    function(result)
+      vim.schedule(function()
+        if result.code ~= 0 then
+          vim.notify(result.stderr or "Failed to generate commit message", vim.log.levels.ERROR, { title = "claude" })
+          return
+        end
 
-      local message, session_id = parse_opencode_json_output(result.stdout or "")
+        local message = vim.trim(result.stdout or "")
 
-      if message == "" then
-        message = clean_opencode_output(result.stdout or "")
-      end
+        if message == "" then
+          vim.notify("Claude returned an empty commit message", vim.log.levels.WARN, { title = "claude" })
+          return
+        end
 
-      if message == "" then
-        vim.notify("OpenCode returned an empty commit message", vim.log.levels.WARN, { title = "opencode" })
-        delete_opencode_session(session_id)
-        return
-      end
-
-      vim.fn.setreg("+", message)
-      vim.fn.setreg('"', message)
-      delete_opencode_session(session_id)
-      vim.notify("Commit message copied to clipboard", vim.log.levels.INFO, { title = "opencode" })
-    end)
-  end)
+        vim.fn.setreg("+", message)
+        vim.fn.setreg('"', message)
+        vim.notify("Commit message copied to clipboard", vim.log.levels.INFO, { title = "claude" })
+      end)
+    end
+  )
 end
 
 -- Module-level so the keys callbacks can reference it after config() runs
