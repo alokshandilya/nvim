@@ -60,3 +60,8 @@ keymap("n", "<leader>q", ":q<cr>", opts)
 
 -- write to buffers
 keymap("n", "<leader>w", ":w<cr>", opts)
+
+-- generate a git commit message with claude and copy it to the clipboard
+vim.keymap.set("n", "<leader>gm", function()
+  require("aloks.util.claude").generate_commit_message()
+end, { desc = "Generate commit message (claude)" })

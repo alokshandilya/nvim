@@ -7,7 +7,6 @@ return {
       mode = "n",
     },
   },
-  { "github/copilot.vim" },
   {
     "akinsho/bufferline.nvim",
     version = "*",
